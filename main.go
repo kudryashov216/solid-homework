@@ -4,6 +4,7 @@ import (
 	"example/solid/internal/emall"
 	"example/solid/internal/repository/dbase"
 	"example/solid/internal/repository/drivers"
+	"fmt"
 	"log"
 )
 
@@ -19,4 +20,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	fmt.Println(drivers.GetListDriversSQL())
+
 }
