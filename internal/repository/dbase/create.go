@@ -29,6 +29,8 @@ func (db *CustomDB) CreateTableOrders() {
 	switch db.driver {
 	case drivers.SQLITE:
 		sqlite.CreateTableOrders(db.db)
+	case drivers.SQLITE3:
+		sqlite.CreateTableOrders(db.db)
 	}
 
 }
