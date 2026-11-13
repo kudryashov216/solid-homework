@@ -5,7 +5,7 @@ import (
 	"example/solid/internal/repository/drivers"
 )
 
-type RepositoryWriter interface {
+type DB interface {
 	CreateTableOrders()
 	GetCurrentDriver() *drivers.Driver
 	GetSqlDB() *sql.DB

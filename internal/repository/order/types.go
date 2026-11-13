@@ -5,7 +5,7 @@ import (
 	"example/solid/internal/repository/dbase"
 )
 
-type OrderSystem struct {
-	RW     dbase.RepositoryWriter
+type OrderService struct {
+	RW     dbase.DB
 	Notify notifier.Notifier
 }

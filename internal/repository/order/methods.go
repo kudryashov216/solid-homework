@@ -6,11 +6,11 @@ import (
 	"fmt"
 )
 
-func NewOrderService(db dbase.RepositoryWriter, notifier notifier.Notifier) *OrderSystem {
-	return &OrderSystem{RW: db, Notify: notifier}
+func NewOrderService(db dbase.DB, notifier notifier.Notifier) *OrderService {
+	return &OrderService{RW: db, Notify: notifier}
 }
 
-func (s *OrderSystem) CreateOrder(customer string, products []string, total float64) error {
+func (s *OrderService) CreateOrder(customer string, products []string, total float64) error {
 
 	var err error
 

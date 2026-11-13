@@ -20,13 +20,20 @@ func main() {
 	customDB.CreateTableOrders()
 
 	system := order.NewOrderService(customDB, notifier.GetNewSender(notifier.SMS))
+
 	err = system.CreateOrder("Иван", []string{"apple", "banana"}, 10.5)
 
-	logger.WriteToError(err, false)
+	if err != nil {
+		logger.WriteToError(err, false)
+		return
+	}
 
 	system = order.NewOrderService(customDB, notifier.GetNewSender(notifier.EMAIL))
 	err = system.CreateOrder("Богдан", []string{"kiwi", "strawberry"}, 10.5)
 
-	logger.WriteToError(err, false)
+	if err != nil {
+		logger.WriteToError(err, false)
+		return
+	}
 
 }

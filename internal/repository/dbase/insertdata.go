@@ -6,7 +6,7 @@ import (
 	"example/solid/internal/repository/drivers"
 )
 
-func AddOrder(s RepositoryWriter, customer string, products []string, total float64) error {
+func AddOrder(s DB, customer string, products []string, total float64) error {
 
 	var err error
 
