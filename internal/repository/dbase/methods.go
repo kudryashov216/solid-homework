@@ -2,13 +2,20 @@ package dbase
 
 import (
 	"database/sql"
+	"errors"
 	"example/solid/internal/repository/dbase/sqlite"
 	"example/solid/internal/repository/drivers"
 )
 
+//types methods
+
 func CreateNewDB(sqlDriver drivers.Driver, dataSourceName string) (*CustomDB, error) {
 
 	var newDB CustomDB
+
+	if !drivers.DriverSupported(sqlDriver) {
+		return nil, errors.New("The driver is not supported.")
+	}
 
 	db, err := sql.Open(string(sqlDriver), dataSourceName)
 

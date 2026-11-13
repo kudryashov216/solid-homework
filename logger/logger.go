@@ -2,6 +2,7 @@ package logger
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"time"
 )
@@ -12,10 +13,12 @@ func WriteToError(err error, exitTheApp bool) {
 		return
 	}
 
-	file, _ := os.OpenFile("log.txt", os.O_CREATE|os.O_APPEND|os.O_RDWR, 0644)
-	file.Close()
+	file, _ := os.OpenFile("log.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	defer file.Close()
 
-	file.Write([]byte("[" + time.Now().Format(time.DateTime) + "] INFO: " + err.Error()))
+	text := fmt.Sprintf("[%s] INFO: %s\r", time.Now().Format(time.DateTime), err.Error())
+
+	file.WriteString(text)
 
 	if exitTheApp {
 		os.Exit(1)
