@@ -5,26 +5,28 @@ import (
 	"example/solid/internal/repository/dbase"
 	"example/solid/internal/repository/drivers"
 	"example/solid/internal/repository/order"
-	"log"
+	"example/solid/logger"
 )
 
 func main() {
 
-	customDB := dbase.CreateNewDB(drivers.SQLITE, "orders.db")
+	customDB, err := dbase.CreateNewDB(drivers.SQLITE, "orders.db")
+	logger.WriteToError(err, true)
+
+	err = customDB.DB.Ping()
+	logger.WriteToError(err, true)
+
+	defer customDB.GetSqlDB().Close()
 	customDB.CreateTableOrders()
 
 	system := order.NewOrderService(customDB, notifier.GetNewSender(notifier.SMS))
-	err := system.CreateOrder("Иван", []string{"apple", "banana"}, 10.5)
+	err = system.CreateOrder("Иван", []string{"apple", "banana"}, 10.5)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	logger.WriteToError(err, false)
 
 	system = order.NewOrderService(customDB, notifier.GetNewSender(notifier.EMAIL))
 	err = system.CreateOrder("Богдан", []string{"kiwi", "strawberry"}, 10.5)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	logger.WriteToError(err, false)
 
 }

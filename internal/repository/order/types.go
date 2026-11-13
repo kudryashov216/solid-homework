@@ -1,8 +1,11 @@
 package order
 
-import "example/solid/internal/repository/dbase"
+import (
+	"example/solid/internal/notifier"
+	"example/solid/internal/repository/dbase"
+)
 
 type OrderSystem struct {
-	dbase.RepositoryWriter
-	dbase.Notifier
+	RW     dbase.RepositoryWriter
+	Notify notifier.Notifier
 }

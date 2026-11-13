@@ -10,7 +10,3 @@ type RepositoryWriter interface {
 	GetCurrentDriver() *drivers.Driver
 	GetSqlDB() *sql.DB
 }
-
-type Notifier interface {
-	Send(cutomer, message string)
-}

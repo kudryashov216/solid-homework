@@ -4,23 +4,22 @@ import (
 	"database/sql"
 	"example/solid/internal/repository/dbase/sqlite"
 	"example/solid/internal/repository/drivers"
-	"log"
 )
 
-func CreateNewDB(sqlDriver drivers.Driver, dataSourceName string) *CustomDB {
+func CreateNewDB(sqlDriver drivers.Driver, dataSourceName string) (*CustomDB, error) {
 
 	var newDB CustomDB
 
-	db, err := sql.Open(string(sqlDriver), "orders.db")
+	db, err := sql.Open(string(sqlDriver), dataSourceName)
 
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
-	newDB.db = db
+	newDB.DB = db
 	newDB.driver = sqlDriver
 
-	return &newDB
+	return &newDB, nil
 
 }
 
@@ -28,9 +27,9 @@ func (db *CustomDB) CreateTableOrders() {
 
 	switch db.driver {
 	case drivers.SQLITE:
-		sqlite.CreateTableOrders(db.db)
+		sqlite.CreateTableOrders(db.DB)
 	case drivers.SQLITE3:
-		sqlite.CreateTableOrders(db.db)
+		sqlite.CreateTableOrders(db.DB)
 	}
 
 }
@@ -40,5 +39,5 @@ func (s *CustomDB) GetCurrentDriver() *drivers.Driver {
 }
 
 func (s *CustomDB) GetSqlDB() *sql.DB {
-	return s.db
+	return s.DB
 }

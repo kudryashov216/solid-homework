@@ -1,13 +1,12 @@
 package notifier
 
 import (
-	"example/solid/internal/repository/dbase"
 	"fmt"
 )
 
-func GetNewSender(service SenderServices) dbase.Notifier {
+func GetNewSender(service SenderServices) Notifier {
 
-	var sender dbase.Notifier
+	var sender Notifier
 
 	switch service {
 	case SMS:
@@ -21,9 +20,9 @@ func GetNewSender(service SenderServices) dbase.Notifier {
 }
 
 func (s *EmailSender) Send(customer, message string) {
-	fmt.Printf("Уведомление отправлено клиенту %s: %s\n", customer, message)
+	fmt.Printf("[EMAIL] Message: Уведомление отправлено клиенту %s: %s\n", customer, message)
 }
 
 func (d *SMSSender) Send(customer, message string) {
-	fmt.Printf("Уведомление отправлено клиенту %s: %s\n", customer, message)
+	fmt.Printf("[SMS] Message: Уведомление отправлено клиенту %s: %s\n", customer, message)
 }

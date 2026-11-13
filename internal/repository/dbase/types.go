@@ -6,6 +6,6 @@ import (
 )
 
 type CustomDB struct {
-	db     *sql.DB
+	*sql.DB
 	driver drivers.Driver
 }
